@@ -17,4 +17,22 @@ const HomePage = (props) => {
   )
 }
 
+export async function getStaticProps() {
+  
+  const search = await fetch(`https://newsapi.org/v2/top-headlines?country=nl&apiKey=206cf23bcbc64c26b9f3ae21410e1728`);
+  const data = await search.json();
+  const result = data.articles;
+
+  return {
+    props: {
+      news: result.map((data) => ({
+        sourceName: data.source.name,
+        id: data.title,
+        url: data.url,
+        date: data.publishedAt
+      }))
+    }
+  };
+};
+
 export default HomePage;
