@@ -1,12 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import Head from 'next/head';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from 'react-redux';
-import * as d3 from 'd3';
 
 import { fetch_news, clear_state } from '../store/newsSlice';
-import BarChart from '../../d3/Barchart';
+import BarChart from '../../components/d3/Barchart';
 
 const CompareNews = (props) => {
   const [query, setQuery] = useState("Amsterdam");
@@ -64,65 +63,73 @@ const CompareNews = (props) => {
         <title>Compare News Rate</title>
         <meta name="description" content="Compare News Worldwide" />
       </Head>
-      <h2>Compare News Rate 2022</h2>
-      <form>
-        <label>
-          Start date:
-          <DatePicker
-            type='date'
-            selected={startDate}
-            onSelect={(date) => setStartDate(date)}
-            dateFormat="yyyy-MM-dd"
-          />
-        </label>
-        <label>
-          End date:
-          <DatePicker
-            type='date'
-            selected={endDate}
-            onSelect={(date) => setEndDate(date)}
-            dateFormat="yyyy-MM-dd"
-          />
-        </label>
-        <label>
-          Search One:
-          <input
-            type='text'
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </label>
-        <label>
-          Search Two:
-          <input
-            type='text'
-            value={queryTwo}
-            onChange={(e) => setQueryTwo(e.target.value)}
-          />
-        </label>
-        <button onClick={getSearchResult}>Submit</button>
-      </form>
-      {isLoaded && 
-      <ul>{listNews}</ul>
-      }
-      {loadChart && <BarChart dimensions={dimensions} data={state} />}
+      <div className="fixed bg-sky-800 text-white w-full px-40 py-4 font-serif font-semibold">
+        <p className="text-4xl overline text-center">Monthly News Rate Worldwide</p>
+      </div>
+      <div className="flex justify-center">
+        <div className="mt-24 mb-10 p-5 bg-sky-50 rounded shadow-inner">
+          <form>
+            <div className="flex flex-row pb-5">
+              <label>
+                Start date:
+                <DatePicker
+                  className='rounded'
+                  type="date"
+                  selected={startDate}
+                  onSelect={(date) => setStartDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                />
+              </label>
+              <label>
+                End date:
+                <DatePicker
+                  className='rounded'
+                  type="date"
+                  selected={endDate}
+                  onSelect={(date) => setEndDate(date)}
+                  dateFormat="yyyy-MM-dd"
+                />
+              </label>
+            </div>
+            <div className='flex justify-center'>
+              <div className="flex flex-col">
+                <label className='pb-5'>
+                  Search One:
+                  <input
+                    className='rounded'
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                </label>
+                <label className='pb-5'>
+                  Search Two:
+                  <input
+                    className='rounded'
+                    type="text"
+                    value={queryTwo}
+                    onChange={(e) => setQueryTwo(e.target.value)}
+                  />
+                </label>
+              <div className='flex justify-center'>
+                <button className='bg-sky-400 hover:bg-sky-700 py-2 text-white rounded w-20' onClick={getSearchResult}>Submit</button>
+              </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      {isLoaded && <div className='flex justify-center mb-10'>
+        <ul className="flex flex-col">{listNews}</ul>
+      </div>}
+      {loadChart && <div className="flex justify-center mb-10">
+        <BarChart dimensions={dimensions} data={state} />
+      </div>}
+      <footer className="flex justify-center p-10">
+        <p>This web app is made with the help of <a href="https://newsapi.org/" target='_blank'>News API</a></p>
+      </footer>
     </Fragment>
   );
 };
-
-
-// const toDate = today.setFullYear(today.getFullYear() - 1);
-
-// export async function getStaticProps() {
-//     const search = await fetch(`https://newsapi.org/v2/everything?q=${query}&from=${date}&to=${today}&apiKey=206cf23bcbc64c26b9f3ae21410e1728`);
-//     const data = await search.json();
-//     const result = data.totalResults;
-
-//     return {
-//         props: {
-//             totalNumber: result
-//         }
-//     }
-// }
 
 export default CompareNews;

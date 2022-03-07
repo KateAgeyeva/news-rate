@@ -40,7 +40,7 @@ export const BarChart = ({ dimensions, data }) => {
         .attr("y", (d) => y(d.number))
         .attr("width", x.bandwidth())
         .attr("height", (d) => height - y(d.number))
-        .attr("fill", "grey");
+        .attr("fill", "steelblue");
     }, [data]);
     
   
