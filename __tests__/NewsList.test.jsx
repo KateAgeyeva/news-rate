@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import NewsList from '../components/news/NewsList';
 
 describe('NewsList', () => {
+    //can't get through slice method in NewsItem
     it('renders news if request succeeds', async() => {
         window.fetch = jest.fn();
         window.fetch.mockResolvedValueOnce({

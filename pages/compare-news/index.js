@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { fetch_news, clear_state } from '../store/newsSlice';
 import BarChart from '../../components/d3/Barchart';
+import DateForm from '../../components/form/DateForm';
 
 const CompareNews = (props) => {
   const [query, setQuery] = useState("Amsterdam");
@@ -69,28 +70,7 @@ const CompareNews = (props) => {
       <div className="flex justify-center">
         <div className="mt-24 mb-10 p-5 bg-sky-50 rounded shadow-inner">
           <form>
-            <div className="flex flex-row pb-5">
-              <label>
-                Start date:
-                <DatePicker
-                  className='rounded'
-                  type="date"
-                  selected={startDate}
-                  onSelect={(date) => setStartDate(date)}
-                  dateFormat="yyyy-MM-dd"
-                />
-              </label>
-              <label>
-                End date:
-                <DatePicker
-                  className='rounded'
-                  type="date"
-                  selected={endDate}
-                  onSelect={(date) => setEndDate(date)}
-                  dateFormat="yyyy-MM-dd"
-                />
-              </label>
-            </div>
+            <DateForm datePickerClass='rounded' dataType='date' start={startDate} end={endDate} onStartDate={(date) => setStartDate(date)} onEndDate={(date) => setEndDate(date)} format='yyy-MM-dd' />
             <div className='flex justify-center'>
               <div className="flex flex-col">
                 <label className='pb-5'>

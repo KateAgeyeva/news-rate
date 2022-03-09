@@ -8,7 +8,6 @@ export const BarChart = ({ dimensions, data }) => {
     const svgHeight = height + margin.top + margin.bottom;
 
     useEffect(() => {
-      console.log(data);
       const svgEl = d3
         .select(svgRef.current);
       svgEl.selectAll("*").remove();
