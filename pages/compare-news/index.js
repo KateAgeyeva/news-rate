@@ -105,10 +105,10 @@ const CompareNews = (props) => {
                   queryValue={queryTwo}
                   onInput={(e) => setQueryTwo(e.target.value)}
                 />
-                <div>
+                {/* <div>
                   {inputList}
                   <button onClick={onAddInputField}>Add input</button>
-                </div>
+                </div> */}
                 <div className="flex justify-center">
                   <button
                     className="bg-sky-400 hover:bg-sky-700 py-2 text-white rounded w-20"
