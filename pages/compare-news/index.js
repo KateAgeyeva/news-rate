@@ -1,12 +1,13 @@
+//Handle no results received after fetch
 import { Fragment, useState } from 'react';
 import Head from 'next/head';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetch_news, clear_state } from '../store/newsSlice';
 import BarChart from '../../components/d3/Barchart';
 import DateForm from '../../components/form/DateForm';
+import InputField from '../../components/form/InputField';
 
 const CompareNews = (props) => {
   const [query, setQuery] = useState("Amsterdam");
@@ -73,7 +74,8 @@ const CompareNews = (props) => {
             <DateForm datePickerClass='rounded' dataType='date' start={startDate} end={endDate} onStartDate={(date) => setStartDate(date)} onEndDate={(date) => setEndDate(date)} format='yyy-MM-dd' />
             <div className='flex justify-center'>
               <div className="flex flex-col">
-                <label className='pb-5'>
+                <InputField classLabel='pb-5' text='Search One:' classInput='rounded' inputType='text' queryValue={query} onInput={(e) => setQuery(e.target.value)} />
+                {/* <label className='pb-5'>
                   Search One:
                   <input
                     className='rounded'
@@ -81,8 +83,9 @@ const CompareNews = (props) => {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                   />
-                </label>
-                <label className='pb-5'>
+                </label> */}
+                <InputField classLabel='pb-5' text='Search Two:' classInput='rounded' inputType='text' queryValue={queryTwo} onInput={(e) => setQueryTwo(e.target.value)} />
+                {/* <label className='pb-5'>
                   Search Two:
                   <input
                     className='rounded'
@@ -90,7 +93,7 @@ const CompareNews = (props) => {
                     value={queryTwo}
                     onChange={(e) => setQueryTwo(e.target.value)}
                   />
-                </label>
+                </label> */}
               <div className='flex justify-center'>
                 <button className='bg-sky-400 hover:bg-sky-700 py-2 text-white rounded w-20' onClick={getSearchResult}>Submit</button>
               </div>
