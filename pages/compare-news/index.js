@@ -75,25 +75,7 @@ const CompareNews = (props) => {
             <div className='flex justify-center'>
               <div className="flex flex-col">
                 <InputField classLabel='pb-5' text='Search One:' classInput='rounded' inputType='text' queryValue={query} onInput={(e) => setQuery(e.target.value)} />
-                {/* <label className='pb-5'>
-                  Search One:
-                  <input
-                    className='rounded'
-                    type="text"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                  />
-                </label> */}
                 <InputField classLabel='pb-5' text='Search Two:' classInput='rounded' inputType='text' queryValue={queryTwo} onInput={(e) => setQueryTwo(e.target.value)} />
-                {/* <label className='pb-5'>
-                  Search Two:
-                  <input
-                    className='rounded'
-                    type="text"
-                    value={queryTwo}
-                    onChange={(e) => setQueryTwo(e.target.value)}
-                  />
-                </label> */}
               <div className='flex justify-center'>
                 <button className='bg-sky-400 hover:bg-sky-700 py-2 text-white rounded w-20' onClick={getSearchResult}>Submit</button>
               </div>
