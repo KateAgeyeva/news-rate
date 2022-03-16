@@ -76,11 +76,11 @@ const CompareNews = (props) => {
           Monthly News Rate Worldwide
         </p>
       </div>
-      <div className="pt-20">
+      <div className="flex justify-center pt-20">
         <Link href="/">Back to main page</Link>
       </div>
       <div className="flex justify-center">
-        <div className="mt-24 mb-10 p-5 bg-sky-50 rounded shadow-inner">
+        <div className="mt-4 mb-10 p-5 bg-sky-50 rounded shadow-inner">
           <form>
             <DateForm
               datePickerClass="rounded"
