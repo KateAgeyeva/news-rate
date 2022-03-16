@@ -76,8 +76,10 @@ const CompareNews = (props) => {
           Monthly News Rate Worldwide
         </p>
       </div>
-      <div className="flex justify-center pt-20">
+      <div className="flex flex-col items-center pt-20">
         <Link href="/">Back to main page</Link>
+        <p className='mt-5 text-2xl text-slate-500'>Please fill the form to compare news</p>
+        <p>Time range is restricted to one month</p>
       </div>
       <div className="flex justify-center">
         <div className="mt-4 mb-10 p-5 bg-sky-50 rounded shadow-inner">
