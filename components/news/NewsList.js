@@ -3,7 +3,7 @@ import NewsItem from './NewsItem';
 const NewsList = ({ news }) => {
   return (
     <ul className="grid gap-x-10 gap-y-4 grid-cols-2 pt-14">
-      {news.map((item) => (
+      {news && news.map((item) => (
         <NewsItem
           key={item.id}
           id={item.id}
