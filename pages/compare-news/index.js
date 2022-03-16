@@ -1,6 +1,7 @@
 //Handle no results received after fetch
 import { Fragment, useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { fetch_news, clear_state } from '../store/newsSlice';
@@ -59,10 +60,10 @@ const CompareNews = (props) => {
     <li key={news.id}>For "{news.id}": {news.number} results found.</li>
   );
 
-  const onAddInputField = (event) => {
-    event.preventDefault();
-    setInputList(inputList.concat(<InputField key={inputList.length} />))
-  }
+  // const onAddInputField = (event) => {
+  //   event.preventDefault();
+  //   setInputList(inputList.concat(<InputField key={inputList.length} />))
+  // }
 
   return (
     <Fragment>
@@ -74,6 +75,9 @@ const CompareNews = (props) => {
         <p className="text-4xl overline text-center">
           Monthly News Rate Worldwide
         </p>
+      </div>
+      <div className="pt-20">
+        <Link href="/">Back to main page</Link>
       </div>
       <div className="flex justify-center">
         <div className="mt-24 mb-10 p-5 bg-sky-50 rounded shadow-inner">

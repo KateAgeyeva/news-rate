@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import NewsList from '../components/news/NewsList';
 
-
 const HomePage = (props) => {
   return (
     <Fragment>
