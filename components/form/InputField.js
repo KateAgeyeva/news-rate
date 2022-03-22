@@ -9,6 +9,7 @@ const InputField = ({results, text}) => {
   const {start} = dateState;
   const {end} = dateState;
 
+  //useCallback??
   const fetchNews = async () => {
     const result = await fetch(
       `https://newsapi.org/v2/everything?q=${query}&from=${start}&to=${end}&apiKey=206cf23bcbc64c26b9f3ae21410e1728`
