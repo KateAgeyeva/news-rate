@@ -66,12 +66,12 @@ const CompareNews = (props) => {
         <title>Compare News Rate</title>
         <meta name="description" content="Compare News Worldwide" />
       </Head>
-      <div className="fixed bg-sky-800 text-white w-full px-40 py-4 font-serif font-semibold">
+      <div className="bg-sky-800 text-white w-full px-40 py-4 font-serif font-semibold">
         <p className="text-4xl overline text-center">
           Monthly News Rate Worldwide
         </p>
       </div>
-      <div className="flex flex-col items-center pt-20">
+      <div className="flex flex-col items-center pt-5">
         <Link href="/">Back to main page</Link>
         <p className="mt-5 text-2xl text-slate-500">
           Please fill the form to compare news
