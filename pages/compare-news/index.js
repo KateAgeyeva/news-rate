@@ -1,5 +1,5 @@
 //Handle no results received after fetch
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,62 +8,57 @@ import { fetch_news, clear_state } from '../store/newsSlice';
 import BarChart from '../../components/d3/Barchart';
 import DateForm from '../../components/form/DateForm';
 import InputField from '../../components/form/InputField';
+import { choose_date } from '../store/dateSlice';
 
 const CompareNews = (props) => {
-  const [query, setQuery] = useState("Amsterdam");
-  const [queryTwo, setQueryTwo] = useState("Minsk");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadChart, setLoadChart] = useState(false);
-  const [inputList, setInputList] = useState([]);
+  const [getResults, setGetResults] = useState(false);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.news);
 
+  useEffect(() => {
   const start = startDate.toDateString();
   const end = endDate.toDateString();
+  dispatch(choose_date({start: start, end: end}));
+  }, [startDate, endDate])
+
   const dimensions = {
     width: 500,
     height: 350,
     margin: { top: 30, right: 30, bottom: 30, left: 60 }
   };
 
-  const fetchNews = async () => {
-    const result = await fetch(
-      `https://newsapi.org/v2/everything?q=${query}&from=${start}&to=${end}&apiKey=206cf23bcbc64c26b9f3ae21410e1728`
-    );
-    const data = await result.json();
-    dispatch(fetch_news({number: data.totalResults, id: query}));
-  };
-
-  const fetchNewsTwo = async () => {
-    const result = await fetch(`https://newsapi.org/v2/everything?q=${queryTwo}&from=${start}&to=${end}&apiKey=206cf23bcbc64c26b9f3ae21410e1728`);
-    const data = await result.json();
-    dispatch(fetch_news({number: data.totalResults, id: queryTwo}));
-  };
 
   const getSearchResult = (event) => {
     event.preventDefault();
+    dispatch(clear_state());
     if (isLoaded === false) {
       setIsLoaded(true);
     }
-    dispatch(clear_state());
-    fetchNews();
-    fetchNewsTwo();
+    setGetResults(() => getResults === false ? true : false)
     if (loadChart === false) {
       setLoadChart(true);
+    }
+  };
+
+  const [inputList, setInputList] = useState(['Search: ']);
+
+  const onAddInputField = (event) => {
+    event.preventDefault()
+    if(inputList.length <=5) {
+      setInputList([ ...inputList, 'Search: ' ])
+    } else {
+      return
     }
   };
 
   const listNews = state.map((news) => 
     <li key={news.id}>For "{news.id}": {news.number} results found.</li>
   );
-
-  // const onAddInputField = (event) => {
-  //   event.preventDefault();
-  //   setInputList(inputList.concat(<InputField key={inputList.length} />))
-  // }
 
   return (
     <Fragment>
@@ -95,26 +90,9 @@ const CompareNews = (props) => {
             />
             <div className="flex justify-center">
               <div className="flex flex-col">
-                <InputField
-                  classLabel="pb-5"
-                  text="Search One:"
-                  classInput="rounded"
-                  inputType="text"
-                  queryValue={query}
-                  onInput={(e) => setQuery(e.target.value)}
-                />
-                <InputField
-                  classLabel="pb-5"
-                  text="Search Two:"
-                  classInput="rounded"
-                  inputType="text"
-                  queryValue={queryTwo}
-                  onInput={(e) => setQueryTwo(e.target.value)}
-                />
-                {/* <div>
-                  {inputList}
-                  <button onClick={onAddInputField}>Add input</button>
-                </div> */}
+                <button onClick={onAddInputField}>Add input</button>
+                {inputList.map((item, i) => <InputField key={i} results={getResults} text={item} />)}
+
                 <div className="flex justify-center">
                   <button
                     className="bg-sky-400 hover:bg-sky-700 py-2 text-white rounded w-20"
