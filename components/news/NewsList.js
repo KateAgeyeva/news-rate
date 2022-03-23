@@ -9,6 +9,8 @@ const NewsList = ({ news }) => {
           id={item.id}
           url={item.url}
           date={item.date}
+          image={item.image}
+          description={item.description}
         />
       ))}
     </ul>
