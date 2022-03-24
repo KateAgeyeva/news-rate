@@ -2,12 +2,13 @@ import { Fragment } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import NewsList from '../components/news/NewsList';
+import Footer from '../components/ui/Footer';
 
 const HomePage = (props) => {
   return (
     <Fragment>
       <Head>
-        <title>News Popularity The Netherlands</title>
+        <title>Popular News NL</title>
         <meta
           name="description"
           content="Compare news popularity and trends in the Netherlans"
@@ -44,18 +45,7 @@ const HomePage = (props) => {
           </p>
           <NewsList news={props.news} />
         </div>
-        <footer className="flex justify-center p-10">
-          <p>
-            This web app is made with the help of
-            <a
-              className="text-slate-500"
-              href="https://newsapi.org/"
-              target="_blank"
-            >
-              News API
-            </a>
-          </p>
-        </footer>
+        <Footer />
       </div>
     </Fragment>
   );

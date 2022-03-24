@@ -4,27 +4,36 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetch_news, clear_state } from '../store/newsSlice';
+import { clear_state } from '../store/newsSlice';
 import BarChart from '../../components/d3/Barchart';
 import DateForm from '../../components/form/DateForm';
 import InputField from '../../components/form/InputField';
 import { choose_date } from '../store/dateSlice';
+import Footer from '../../components/ui/Footer';
 
-const CompareNews = (props) => {
+const CompareNews = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadChart, setLoadChart] = useState(false);
   const [getResults, setGetResults] = useState(false);
+  const [clearBtn, setClearBtn] = useState(false);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.news);
 
   useEffect(() => {
-  const start = startDate.toDateString();
-  const end = endDate.toDateString();
-  dispatch(choose_date({start: start, end: end}));
-  }, [startDate, endDate])
+    const start = startDate.toDateString();
+    const end = endDate.toDateString();
+    // Compare dates to make start less than end
+    if (startDate <= endDate) {
+      dispatch(choose_date({ start: start, end: end }));
+    }
+    else {
+      alert('The Start date must be earlier than the End date');
+      setEndDate(new Date());
+    }
+  }, [startDate, endDate]);
 
   const dimensions = {
     width: 500,
@@ -45,10 +54,21 @@ const CompareNews = (props) => {
     }
   };
 
+  const clearForm = () => {
+    dispatch(clear_state());
+    setClearBtn(false);
+    setIsLoaded(false);
+    setLoadChart(false);
+    if (inputList.length > 1) {
+      setInputList([])
+    }
+  };
+
   const [inputList, setInputList] = useState(['Search: ']);
 
   const onAddInputField = (event) => {
-    event.preventDefault()
+    event.preventDefault();
+    setClearBtn(true);
     if(inputList.length <=5) {
       setInputList([ ...inputList, 'Search: ' ])
     } else {
@@ -63,7 +83,7 @@ const CompareNews = (props) => {
   return (
     <Fragment>
       <Head>
-        <title>Compare News Rate</title>
+        <title>Compare News</title>
         <meta name="description" content="Compare News Worldwide" />
       </Head>
       <div>
@@ -84,7 +104,7 @@ const CompareNews = (props) => {
           </div>
           <div className="mr-5">
             <button className="text-lg bg-rose-700 rounded px-3 py-2 text-white font-medium hover:bg-rose-900">
-              <Link href="/">Go to Top-20 News in the NL</Link>
+              <Link href="/">Go to Top-20 News in NL</Link>
             </button>
           </div>
         </div>
@@ -140,11 +160,17 @@ const CompareNews = (props) => {
                 )}
                 <div className="flex justify-center">
                   <button
-                    className="bg-rose-600 hover:bg-rose-700 py-1 text-white rounded w-20"
+                    className="bg-rose-600 hover:bg-rose-700 py-1 text-white rounded w-20 mr-1"
                     onClick={getSearchResult}
                   >
                     Submit
                   </button>
+                  {clearBtn && <button
+                    className="bg-rose-300 hover:bg-rose-700 py-1 text-white rounded w-20 ml-1"
+                    onClick={clearForm}
+                  >
+                    Clear
+                  </button>}
                 </div>
               </div>
             </form>
@@ -160,14 +186,7 @@ const CompareNews = (props) => {
             <BarChart dimensions={dimensions} data={state} />
           </div>
         )}
-        <footer className="flex justify-center p-10">
-          <p>
-            This web app is made with the help of
-            <a className="text-slate-500" href="https://newsapi.org/" target="_blank">
-              News API
-            </a>
-          </p>
-        </footer>
+        <Footer />
       </div>
     </Fragment>
   );
