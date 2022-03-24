@@ -59,6 +59,8 @@ const CompareNews = () => {
     setClearBtn(false);
     setIsLoaded(false);
     setLoadChart(false);
+    setStartDate(new Date());
+    setEndDate(new Date());
     if (inputList.length > 1) {
       setInputList([])
     }
