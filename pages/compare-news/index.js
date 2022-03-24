@@ -136,7 +136,9 @@ const CompareNews = () => {
               />
               <div className="flex flex-col items-center">
                 {inputList.map((item, i) => (
-                  <InputField key={i} results={getResults} text={item} />
+                  <InputField key={i} results={getResults} text={item} 
+                  // onDelete={} 
+                  />
                 ))}
                 {inputList.length <= 5 && (
                   <button
