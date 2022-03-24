@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetch_news } from '../../pages/store/newsSlice';
 
 const InputField = ({results, text}) => {
-  const [query, setQuery] = useState('Amsterdam');
+  const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const dateState = useSelector((state) => state.date);
   const {start} = dateState;
