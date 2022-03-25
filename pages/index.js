@@ -11,7 +11,7 @@ const HomePage = (props) => {
         <title>Popular News NL</title>
         <meta
           name="description"
-          content="Compare news popularity and trends in the Netherlans"
+          content="Compare news popularity and trends in the Netherlands"
         />
       </Head>
       <div>
