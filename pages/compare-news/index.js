@@ -1,5 +1,5 @@
 //Handle no results received after fetch
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
@@ -65,6 +65,14 @@ const CompareNews = () => {
       setInputList([])
     }
   };
+
+  // const deleteInput = useMemo(() => {
+  //   (i) => {
+  //     console.log(i)
+  //     const newInputList = inputList.filter((item) => inputList.indexOf(i) !== i);
+  //     setInputList(newInputList);
+  //   };
+  // }, []);
 
   const [inputList, setInputList] = useState(['Search: ']);
 
@@ -136,8 +144,8 @@ const CompareNews = () => {
               />
               <div className="flex flex-col items-center">
                 {inputList.map((item, i) => (
-                  <InputField key={i} results={getResults} text={item} 
-                  // onDelete={} 
+                  <InputField key={i} id={i} results={getResults} text={item} 
+                  // onDelete={i > 0 ? () => deleteInput(i) : null} 
                   />
                 ))}
                 {inputList.length <= 5 && (

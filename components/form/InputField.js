@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetch_news } from '../../pages/store/newsSlice';
 
-const InputField = ({ results, text, onDelete }) => {
+const InputField = ({ results, text, onDelete, id }) => {
   const [query, setQuery] = useState('');
   const dispatch = useDispatch();
   const dateState = useSelector((state) => state.date);
@@ -27,6 +27,7 @@ const InputField = ({ results, text, onDelete }) => {
     <label className='flex direction-row pb-5'>
       {text}
       <input
+        id={id}
         className='rounded'
         type='text'
         value={query}

@@ -13,6 +13,10 @@ export const newsSlice = createSlice({
     clear_state: (state) => {
         state = [];
         return state;
+    },
+    delete_input: (state, action) => {
+      state = state.filter((item) => item.id !== action.payload);
+      return state;
     }
   },
 });

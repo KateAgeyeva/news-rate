@@ -53,21 +53,26 @@ const HomePage = (props) => {
 
 export async function getStaticProps() {
   
-  const search = await fetch(`https://newsapi.org/v2/top-headlines?country=nl&apiKey=206cf23bcbc64c26b9f3ae21410e1728`);
+  try {
+    const search = await fetch(`https://newsapi.org/v2/top-headlines?country=nl&apiKey=206cf23bcbc64c26b9f3ae21410e1728`);
   const data = await search.json();
   const result = data.articles;
 
-  return {
-    props: {
-      news: result.map((data) => ({
-        id: data.title,
-        url: data.url,
-        date: data.publishedAt,
-        image: data.urlToImage,
-        description: data.description
-      }))
-    }
-  };
+    return {
+      props: {
+        news: result.map((data) => ({
+          id: data.title,
+          url: data.url,
+          date: data.publishedAt,
+          image: data.urlToImage,
+          description: data.description
+        }))
+      }
+    };
+   } catch (err) {
+     console.log(err);
+   }
+  
 };
 
 export default HomePage;
