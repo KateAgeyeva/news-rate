@@ -1,7 +1,6 @@
 //Handle no results received after fetch
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -10,24 +9,31 @@ import BarChart from '../../components/d3/Barchart';
 import DateForm from '../../components/form/DateForm';
 import InputField from '../../components/form/InputField';
 import { choose_date } from '../store/dateSlice';
-import Footer from '../../components/ui/Footer';
 
-const CompareNews = ({ onChange }) => {
+const CompareNews = () => {
+  //DATE PICKER DATES
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  // RESULTS FORM FETCH LOADED
   const [isLoaded, setIsLoaded] = useState(false);
+  //BARCHART LOADED
   const [loadChart, setLoadChart] = useState(false);
   const [getResults, setGetResults] = useState(false);
+  //CLEAR FORM BTN
   const [clearBtn, setClearBtn] = useState(false);
-  const [inputList, setInputList] = useState([]);
+  //INPUT FIELDS ADDED
+  const initialInputData = {
+    text: 'Keyword: ', id: `${uuidv4()}`
+  };
+  const [inputList, setInputList] = useState([initialInputData]);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.news);
 
+  //FETCH NEWS DATA
   useEffect(() => {
     const start = startDate.toDateString();
     const end = endDate.toDateString();
-    // Compare dates to make start less than end
     if (startDate <= endDate) {
       dispatch(choose_date({ start: start, end: end }));
     }
@@ -37,13 +43,14 @@ const CompareNews = ({ onChange }) => {
     }
   }, [startDate, endDate]);
 
+  //BARCHART SVG DIMENSIONS
   const dimensions = {
     width: 500,
     height: 350,
     margin: { top: 30, right: 30, bottom: 30, left: 60 }
   };
 
-
+  //LOAD FETCH RESULTS AND BARCHART
   const getSearchResult = (event) => {
     event.preventDefault();
     dispatch(clear_state());
@@ -56,6 +63,7 @@ const CompareNews = ({ onChange }) => {
     }
   };
 
+  //CLEAR FORM
   const clearForm = () => {
     dispatch(clear_state());
     setClearBtn(false);
@@ -64,28 +72,38 @@ const CompareNews = ({ onChange }) => {
     setStartDate(new Date());
     setEndDate(new Date());
     if (inputList.length > 1) {
-      setInputList([])
+      setInputList([initialInputData])
     }
   };
 
+  //ADD INPUT FIELD
   const onAddInputField = () => {
     event.preventDefault();
     setClearBtn(true);
     if(inputList.length <=5) {
-      setInputList([ ...inputList, {text: 'Search: ', id: `${uuidv4()}`} ])
+      setInputList([ ...inputList, {text: 'Keyword: ', id: `${uuidv4()}`} ])
     } else {
       return
     }
   };
 
+  //DELETE INPUT FIELD
   const deleteInput = useCallback((key) => {
     event.preventDefault();
     const newInputList = inputList.filter((item) => item.id !== key)
     setInputList(newInputList);
+    setClearBtn(false);
+    setIsLoaded(false);
+    setLoadChart(false);
   }, [inputList]);
 
-  const listNews = state.map((news) => 
-    <li key={news.id}>For "{news.id}": {news.number} results found.</li>
+  //FETCH RESULTS LIST
+  const listNews = state.map((news) => {
+    const newsNumber = news.number;
+    if (newsNumber > 0) {
+      return <li className='text-lg' key={news.id}>For "{news.id}": {news.number} articles found.</li>
+    }
+  }
   );
 
   return (
@@ -94,29 +112,6 @@ const CompareNews = ({ onChange }) => {
         <title>Compare News</title>
         <meta name="description" content="Compare News Worldwide" />
       </Head>
-      <div>
-        <div className="flex flex-row justify-between items-center w-full py-4 font-serif font-semibold">
-          <div className="flex flex-row items-center ml-5">
-            <div className="bg-rose-700">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-16 w-16"
-                viewBox="0 0 20 20"
-                //#BE123C
-                fill="white"
-              >
-                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-              </svg>
-            </div>
-            <p className="text-4xl text-black ml-2">News Rates</p>
-          </div>
-          <div className="mr-5">
-            <button className="text-lg bg-rose-700 rounded px-3 py-2 text-white font-medium hover:bg-rose-900">
-              <Link href="/">Go to Top-20 News in NL</Link>
-            </button>
-          </div>
-        </div>
-        <div className="flex justify-center bg-rose-700 py-3"></div>
         <div className="container mx-auto">
           <p className="flex justify-center pt-10 text-2xl font-extrabold">
             Compare News Rates Worldwide
@@ -128,9 +123,11 @@ const CompareNews = ({ onChange }) => {
           </p>
           <p className='italic'>Time range is restricted to one month</p>
         </div>
+        {/* FORM */}
         <div className="flex justify-center">
           <div className="mt-4 mb-10 p-5 bg-white rounded shadow-md">
             <form>
+              {/* DATE PICKER */}
               <DateForm
                 datePickerClass="rounded"
                 dataType="date"
@@ -141,11 +138,13 @@ const CompareNews = ({ onChange }) => {
                 format="yyy-MM-dd"
               />
               <div className="flex flex-col items-center">
+                {/* INPUT FIELDS */}
                 {inputList.map(({ text, id }) => (
                   <InputField key={id} id={id} results={getResults} text={text} 
                    onDelete={() => deleteInput(id)} 
                   />
                 ))}
+                {/* ADD INPUT FIELD BTN */}
                 {inputList.length <= 5 && (
                   <button
                     onClick={onAddInputField}
@@ -164,10 +163,11 @@ const CompareNews = ({ onChange }) => {
                           clipRule="evenodd"
                         />
                       </svg>
-                      <p className="ml-1">Add Search</p>
+                      <p className="ml-1">Add Keyword</p>
                     </div>
                   </button>
                 )}
+                {/* SUBMIT BTN */}
                 <div className="flex justify-center">
                   <button
                     className="bg-rose-600 hover:bg-rose-700 py-1 text-white rounded w-20 mr-1"
@@ -175,6 +175,7 @@ const CompareNews = ({ onChange }) => {
                   >
                     Submit
                   </button>
+                  {/* CLEAR BTN */}
                   {clearBtn && <button
                     className="bg-rose-300 hover:bg-rose-700 py-1 text-white rounded w-20 ml-1"
                     onClick={clearForm}
@@ -186,18 +187,18 @@ const CompareNews = ({ onChange }) => {
             </form>
           </div>
         </div>
+        {/* FETCH RESULTS */}
         {isLoaded && (
           <div className="flex justify-center mb-10">
             <ul className="flex flex-col">{listNews}</ul>
           </div>
         )}
+        {/* BARCHART */}
         {loadChart && (
           <div className="flex justify-center mb-10">
             <BarChart dimensions={dimensions} data={state} />
           </div>
         )}
-        <Footer />
-      </div>
     </Fragment>
   );
 };
