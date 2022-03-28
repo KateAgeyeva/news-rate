@@ -8,7 +8,7 @@ const Footer = () => {
             href="https://newsapi.org/"
             target="_blank"
           >
-          News API
+           News API
           </a>
         </p>
       </footer>
