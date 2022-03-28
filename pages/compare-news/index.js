@@ -1,8 +1,9 @@
 //Handle no results received after fetch
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 
 import { clear_state } from '../store/newsSlice';
 import BarChart from '../../components/d3/Barchart';
@@ -11,13 +12,14 @@ import InputField from '../../components/form/InputField';
 import { choose_date } from '../store/dateSlice';
 import Footer from '../../components/ui/Footer';
 
-const CompareNews = () => {
+const CompareNews = ({ onChange }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadChart, setLoadChart] = useState(false);
   const [getResults, setGetResults] = useState(false);
   const [clearBtn, setClearBtn] = useState(false);
+  const [inputList, setInputList] = useState([]);
 
   const dispatch = useDispatch();
   const state = useSelector((state) => state.news);
@@ -66,25 +68,21 @@ const CompareNews = () => {
     }
   };
 
-  // const deleteInput = useMemo(() => {
-  //   (i) => {
-  //     console.log(i)
-  //     const newInputList = inputList.filter((item) => inputList.indexOf(i) !== i);
-  //     setInputList(newInputList);
-  //   };
-  // }, []);
-
-  const [inputList, setInputList] = useState(['Search: ']);
-
-  const onAddInputField = (event) => {
+  const onAddInputField = () => {
     event.preventDefault();
     setClearBtn(true);
     if(inputList.length <=5) {
-      setInputList([ ...inputList, 'Search: ' ])
+      setInputList([ ...inputList, {text: 'Search: ', id: `${uuidv4()}`} ])
     } else {
       return
     }
   };
+
+  const deleteInput = useCallback((key) => {
+    event.preventDefault();
+    const newInputList = inputList.filter((item) => item.id !== key)
+    setInputList(newInputList);
+  }, [inputList]);
 
   const listNews = state.map((news) => 
     <li key={news.id}>For "{news.id}": {news.number} results found.</li>
@@ -143,9 +141,9 @@ const CompareNews = () => {
                 format="yyy-MM-dd"
               />
               <div className="flex flex-col items-center">
-                {inputList.map((item, i) => (
-                  <InputField key={i} id={i} results={getResults} text={item} 
-                  // onDelete={i > 0 ? () => deleteInput(i) : null} 
+                {inputList.map(({ text, id }) => (
+                  <InputField key={id} id={id} results={getResults} text={text} 
+                   onDelete={() => deleteInput(id)} 
                   />
                 ))}
                 {inputList.length <= 5 && (
