@@ -24,9 +24,11 @@ const HomePage = (props) => {
 
 export async function getStaticProps() {
   try {
-    const search = await fetch(`https://newsapi.org/v2/top-headlines?country=nl&apiKey=93fd26572d7347839c7298cdca441095`);
-  const data = await search.json();
-  const result = data.articles;
+    const search = await fetch(
+      `https://newsapi.org/v2/top-headlines?country=nl&apiKey=93fd26572d7347839c7298cdca441095`
+    );
+    const data = await search.json();
+    const result = data.articles;
 
     return {
       props: {
@@ -35,14 +37,16 @@ export async function getStaticProps() {
           url: data.url,
           date: data.publishedAt,
           image: data.urlToImage,
-          description: data.description
-        }))
-      }
+          description: data.description,
+        })),
+      },
     };
-   } catch (err) {
-     console.log(err);
-   }
-  
+  } catch (err) {
+    console.error(err);
+    return {
+      notFound: true
+    }
+  }
 };
 
 export default HomePage;
