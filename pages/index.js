@@ -40,7 +40,10 @@ export async function getStaticProps() {
       }
     };
    } catch (err) {
-     console.log(err);
+     console.error(err);
+     return {
+       notFound: true
+     }
    }
   
 };
