@@ -10,7 +10,7 @@ import DateForm from '../../components/form/DateForm';
 import InputField from '../../components/form/InputField';
 import { choose_date } from '../store/dateSlice';
 
-const CompareNews = () => {
+const CompareNews = ({ fetchNews }) => {
   //DATE PICKER DATES
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());

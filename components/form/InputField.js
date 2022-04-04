@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetch_news } from '../../pages/store/newsSlice';
 
@@ -11,11 +11,13 @@ const InputField = ({ results, text, onDelete, id }) => {
 
   //FETCH RESULTS
   const fetchNews = async () => {
-    const result = await fetch(
-      `https://newsapi.org/v2/everything?q=${query}&from=${start}&to=${end}&apiKey=93fd26572d7347839c7298cdca441095`
-    );
-    const data = await result.json();
-    dispatch(fetch_news({number: data.totalResults, id: query}));
+    if (query !== '') {
+      const result = await fetch(
+        `https://newsapi.org/v2/everything?q=${query}&from=${start}&to=${end}&apiKey=93fd26572d7347839c7298cdca441095`
+      );
+      const data = await result.json();
+      dispatch(fetch_news({number: data.totalResults, id: query}));
+    }
   };
 
   useEffect(() => {

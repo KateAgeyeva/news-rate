@@ -13,8 +13,8 @@ const HomePage = (props) => {
         />
       </Head>
         <div className="container mx-auto">
-          <p className="flex justify-center pt-10 text-2xl font-extrabold">
-            Top-20 Most Recent News in the Netherlands
+          <p className="flex justify-center pt-10 text-3xl font-bold">
+            Top Most Recent News in the Netherlands
           </p>
           <NewsList news={props.news} />
         </div>

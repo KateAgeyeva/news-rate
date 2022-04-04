@@ -20,12 +20,12 @@ const MainNavigation = () => {
             </div>
             {/* NAVIGATION */}
             <div className="flex flex-row mr-5">
-              <button className="text-lg bg-rose-700 hover:bg-rose-900 active:bg-rose-900 rounded mr-3 px-3 py-2 text-white font-medium">
+              <button className="text-lg bg-rose-700 hover:bg-rose-900 rounded mr-3 px-3 py-2 text-white font-medium">
                 <Link href="/compare-news">
                   Compare News Worldwide
                 </Link>
               </button>
-              <button className="text-lg bg-rose-700 hover:bg-rose-900 active:bg-rose-900 rounded px-3 py-2 text-white font-medium">
+              <button className="text-lg bg-rose-700 hover:bg-rose-900 rounded px-3 py-2 text-white font-medium">
                 <Link href="/">
                   Top News NL
                 </Link>
