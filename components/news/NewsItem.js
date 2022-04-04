@@ -1,4 +1,3 @@
-import Image from 'next/image';
 
 const NewsItem = ({ id, url, date, image, description }) => {
     const published = date.slice(0,10);
@@ -8,7 +7,7 @@ const NewsItem = ({ id, url, date, image, description }) => {
           <p className="text-lg text-center font-semibold">{id}</p>
           <p className="text-slate-500">Published At: {published}</p>
           {description!==null ? <p>{description}</p> : <p className="italic">No description</p>}
-          <a href={url} target="_blank" rel="noopener noreferrer" className="text-rose-500 hover:text-slate-500 text-lg">
+          <a href={url} rel="noreferrer" target="_blank" className="text-rose-500 hover:text-slate-500 text-lg">
             Read more
           </a>
         </li>

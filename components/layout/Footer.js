@@ -7,6 +7,7 @@ const Footer = () => {
             className="text-rose-500"
             href="https://newsapi.org/"
             target="_blank"
+            rel="noreferrer"
           >
            News API
           </a>

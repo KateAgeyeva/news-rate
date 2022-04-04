@@ -1,6 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetch_news } from '../../pages/store/newsSlice';
+import { fetch_news } from '../../store/newsSlice';
 
 const InputField = ({ results, text, onDelete, id }) => {
   const [query, setQuery] = useState('');
