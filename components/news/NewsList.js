@@ -1,7 +1,5 @@
 import NewsItem from './NewsItem';
 
-import { useDispatch } from 'react-redux';
-
 const NewsList = ({ news }) => {
   const newsNewList = news.filter((item) => item.image !== null);
   const newsTwo = newsNewList.splice(0, 2);
