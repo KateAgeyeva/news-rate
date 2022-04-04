@@ -33,7 +33,7 @@ const MainNavigation = () => {
             </div>
           </div>
           {/* LINE */}
-          <div className="flex justify-center bg-rose-700 py-3"></div>
+          <div className="flex justify-center bg-rose-700 py-2"></div>
       </div>
     );
 };
