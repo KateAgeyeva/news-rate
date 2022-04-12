@@ -25,7 +25,7 @@ const HomePage = (props) => {
 //FETCH DATA FROM API TO PROPS
 export async function getStaticProps() {
   try {
-    const search = await fetch(`https://newsapi.org/v2/top-headlines?country=nl&apiKey=93fd26572d7347839c7298cdca441095`);
+    const search = await fetch(`https://newsapi.org/v2/top-headlines?country=nl&apiKey=${process.env.apiKey}`);
   const data = await search.json();
   const result = data.articles;
 

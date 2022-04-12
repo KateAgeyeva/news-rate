@@ -90,11 +90,8 @@ const CompareNews = () => {
   //DELETE INPUT FIELD
   const deleteInput = useCallback((key) => {
     event.preventDefault();
-    const newInputList = inputList.filter((item) => item.id !== key)
+    const newInputList = inputList.filter((item) => item.id !== key);
     setInputList(newInputList);
-    setClearBtn(false);
-    setIsLoaded(false);
-    setLoadChart(false);
   }, [inputList]);
 
   //FETCH RESULTS LIST
