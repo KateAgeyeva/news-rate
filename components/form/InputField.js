@@ -22,7 +22,7 @@ const InputField = ({ results, text, onDelete, id }) => {
 
   useEffect(() => {
       fetchNews();
-    }, [results]
+    }, []
   );
 
   return (
