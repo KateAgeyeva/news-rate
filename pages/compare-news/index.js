@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import { clear_state } from '../../store/newsSlice';
-import BarChart from '../../components/d3/Barchart';
+import BarChart from '../../components/d3/BarChart';
 import DateForm from '../../components/form/DateForm';
 import InputField from '../../components/form/InputField';
 import { choose_date } from '../../store/dateSlice';
