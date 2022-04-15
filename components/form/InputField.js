@@ -13,7 +13,7 @@ const InputField = ({ results, text, onDelete, id }) => {
   const fetchNews = async () => {
     if (query !== '') {
       const result = await fetch(
-        `https://newsapi.org/v2/everything?q=${query}&from=${start}&to=${end}&apiKey=${process.env.apiKey}`
+        `https://newsapi.org/v2/everything?q=${query}&from=${start}&to=${end}&apiKey=93fd26572d7347839c7298cdca441095`
       );
       const data = await result.json();
       dispatch(fetch_news({number: data.totalResults, id: query}));
@@ -22,7 +22,7 @@ const InputField = ({ results, text, onDelete, id }) => {
 
   useEffect(() => {
       fetchNews();
-    }, []
+    }, [results]
   );
 
   return (

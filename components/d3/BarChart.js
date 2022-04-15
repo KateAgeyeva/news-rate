@@ -48,7 +48,7 @@ export const BarChart = ({ dimensions, data }) => {
         .attr("width", x.bandwidth())
         .attr("height", (d) => height - y(d.number))
         .attr("fill", "#881337");
-    }, []);
+    }, [data]);
     
   
     return <svg ref={svgRef} width={svgWidth} height={svgHeight} />
